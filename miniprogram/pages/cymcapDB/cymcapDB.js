@@ -10,19 +10,19 @@ Page({
     disabledMoment: false,
     queryResult: '',
     tempFileURL: '',
-    volVal: '110KV',  // post：电压等级
-    sectionVal: '1600mm',   // post: 电缆截面
+    volVal: 110,  // post：电压等级
+    sectionVal: 1600,   // post: 电缆截面
     burywayVal: '直埋',   // post：敷设方式
     thermalresistivityVal: 0.8, // post：土壤热阻系数
     landWayVal: '单点接地', // post: 金属护套层接地方式
-    DepthVal: '1回0.7m',   // post：敷设深度
+    DepthVal: '1回0.7m',   // post：回路数和深度
     depthVal: 0.7,  // num：敷设深度
     tempVal: 28,  // post：环境温度
-    vol: [{vol:'110KV', checked: 'true'}, {vol:'220KV'}], // 电压等级
+    vol: [{vol:110, checked: 'true'}, {vol:220}], // 电压等级
     landWay: [{val:'单点接地', checked: 'true'}, {val:'交叉接地'}],  // 金属护套层接地方式
-    Section: {'110KV':[{val: '1600mm' ,checked: 'true'}, {val: '1200mm'}, {val: '800mm'}, {val: '500mm'}], 
-              '220KV':[{val: '2500mm',checked: 'true'} ,{val: '2000mm'}, {val: '1600mm'}, {val: '1200mm'}]},  // 电缆截面
-    section: [{val: '1600mm' ,checked: 'true'}, {val: '1200mm'}, {val: '800mm'}, {val: '500mm'}],
+    Section: {110:[{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}], 
+              220:[{val: 2500,checked: 'true'} ,{val: 2000}, {val: 1600}, {val: 1200}]},  // 电缆截面
+    section: [{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}],
     thermalResistivity: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数
     thermalResistivityTemp: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数Temp
     buryWay: [{way: '直埋', checked: 'true'}, {way: '电缆沟' }, {way: '埋管'}, {way: '非开挖铺管'}, {way: '空气桥架'}, {way: '隧道'}],  // 敷设方式
@@ -40,7 +40,36 @@ Page({
              1.2: [{val: 27, checked:'true'}, {val:29}, {val:31}], 
              3: [{val: 24, checked:'true'}, {val:26}, {val:28}], 
              5:[{val: 30, checked:'true'}, {val:40}]}, // 环境温度（0代表空气中[春夏秋35℃，冬25℃]，其他为埋地[水泥、正常、草地地面]）
-    envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}]
+    envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
+    conditionSelectedList: [{
+      value: '电压等级',
+      selected: false ,
+      title: '电压等级'
+    },{
+      value: '电缆截面',
+      selected: false ,
+      title: '电缆截面'
+    },{
+      value: '敷设方式',
+      selected: false ,
+      title: '敷设方式'
+    },{
+      value: '回路数和深度',
+      selected: false ,
+      title: '回路数和深度'
+    },{
+      value: '环境温度',
+      selected: false ,
+      title: '环境温度'
+    },{
+      value: '土壤热阻系数',
+      selected: false ,
+      title: '土壤热阻系数'
+    },{
+      value: '金属护套层接地方式',
+      selected: false ,
+      title: '金属护套层接地方式'
+    }]
   },
 
   onLoad: function (options) {
@@ -51,20 +80,30 @@ Page({
     }
   },
 
+  checkboxChange: function(e) {
+    console.log('checkboxChange e:',e);
+    let string = "conditionSelectedList["+e.target.dataset.index+"].selected"
+        this.setData({
+            [string]: !this.data.conditionSelectedList[e.target.dataset.index].selected
+        })
+        let detailValue = this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value)
+        console.log('所有选中的值为：', detailValue)
+  },
+
   // ------------------------------------------       电压关联与优先度： 电压等级 > 电缆截面       ---------------------------------
   // 改变电压等级
   volChange: function (e) {
     this.setData({
-      volVal: e.detail.value,
+      volVal: parseFloat(e.detail.value),
       section: this.data.Section[e.detail.value],
-      sectionVal: this.data.Section[e.detail.value][0].val,
+      sectionVal: parseFloat(this.data.Section[e.detail.value][0].val),
     })
   },
 
   // 改变电缆截面
   sectionChange: function(e) {
     this.setData({
-      sectionVal: e.detail.value,
+      sectionVal: parseFloat(e.detail.value),
     })
   },
 
@@ -159,7 +198,8 @@ Page({
 
   // -----------------------------------   稳态载流量    ------------------------------------------
   onQuerySteady: function() {
-    // console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
+    console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
+    console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
     // 显示加载
     this.setData({
       hidden: false,
@@ -171,11 +211,12 @@ Page({
       data: {
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,
-        回路数加深度: this.data.DepthVal,
+        回路数和深度: this.data.DepthVal,
         金属护套层接地方式: this.data.landWayVal,
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value)
       },
       success: res => {
         let that = this;

@@ -5,9 +5,23 @@
         加载中...
   </loading>
 
-  <!-- 1. 改变电压等级 -->
-  <!-- 电压等级 -->
-  <view class="search-section">
+  <view class="comment-btn">
+        <button
+            wx:for="{{conditionSelectedList}}" 
+            wx:for-item="item" 
+            wx:key="item.index"  
+            bindtap="checkboxChange" 
+            data-value="{{item.value}}" 
+            data-index="{{index}}"  
+            checked="{{item.selected}}"
+            class="btn {{item.selected ? 'btn-selected' : ''}}" >
+            {{item.title}}
+        </button>
+  </view>
+
+  <view>
+    <!-- 1. 改变电压等级 -->
+    <!-- 电压等级 -->
     <view class="weui-cells weui-cells_after-title">
       <text class="p" style="font-weight:bold">电压等级</text>
       <radio-group bindchange="volChange">

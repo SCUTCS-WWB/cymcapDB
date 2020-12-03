@@ -2,3 +2,18 @@
 
 @import "../../style/guide.wxss";
 
+
+.btn{
+  width: 150rpx;
+  height: 70rpx;
+  font-size: 24rpx;
+  padding: 0;
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  border-radius: 4px;
+  margin: 15rpx 10rpx;
+  text-align: center;
+}
+.btn-selected{
+  border: 1px solid #06a380;
+}
