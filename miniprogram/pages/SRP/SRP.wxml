@@ -1,0 +1,9 @@
+<!--pages/cymcapDB/cymcapDB.wxml-->
+<view class="container">
+  <!-- 加载显示 -->
+  <loading hidden="{{hidden}}">
+        加载中...
+  </loading>
+
+  <button size="mini" type="default" bindtap="upLoadAction">上传文件</button>
+</view>

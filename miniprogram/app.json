@@ -5,6 +5,7 @@
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
     "pages/cymcapDB/cymcapDB",
+    "pages/SRP/SRP",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib"
   ],

@@ -30,4 +30,11 @@
     </navigator>
   </view>
 
+  <!-- SRP学生信息系统 -->
+    <view class="uploader">
+    <navigator url="../SRP/SRP" open-type="navigate" class="uploader-text">
+      <text>SRP学生系统</text>
+    </navigator>
+  </view>
+
 </view>
