@@ -1,0 +1,13 @@
+/**login.wxss**/
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.wx-input {
+  border: 1px solid #777777;
+  margin: 5px;
+}

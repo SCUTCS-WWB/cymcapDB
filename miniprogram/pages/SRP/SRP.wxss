@@ -2,7 +2,6 @@
 
 @import "../../style/guide.wxss";
 
-
 .btn{
   width: 150rpx;
   height: 70rpx;

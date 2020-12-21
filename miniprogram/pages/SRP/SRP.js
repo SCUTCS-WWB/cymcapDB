@@ -41,53 +41,6 @@ Page({
     })
   },
 
-
-  // -----------------------------------   短时载流量    ------------------------------------------
-  onQueryMoment: function() {
-    this.setData({
-      hidden: false,
-      disabledMoment: true
-    });
-    wx.cloud.callFunction({
-      name: "moment",
-      data: {
-        a: 1,
-      },
-      success: res => {
-        let that = this;
-        wx.cloud.getTempFileURL({   //获取文件下载地址（24小时内有效）
-          fileList:[res.result.fileID],
-          success: res=> {
-            that.setData({
-              tempFileURL: res.fileList[0].tempFileURL,
-              showUrl: true
-            })
-            wx.setClipboardData({ //复制刚获取到链接，成功后会自动弹窗提示已复制
-              data: that.data.tempFileURL,
-              success: res=> {
-                wx.getClipboardData({
-                  success: (res) => {
-                    console.log(res.data)
-                  },
-                })
-              }
-            })
-          }
-        })
-      },
-      fail: err=> {
-        console.log(err)
-      },
-      complete: () => {
-        let that = this;
-        that.setData({
-          hidden: true,
-          disabledMoment: false
-        });
-      }
-    })
-  },
-
   goHome: function() {
     const pages = getCurrentPages()
     if (pages.length === 2) {
