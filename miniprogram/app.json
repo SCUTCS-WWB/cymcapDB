@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/login/login",
+    "pages/cymcap/cymcap",
+    "pages/cymcapSteady/cymcapSteady",
     "pages/index/index",
+    "pages/login/login",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
-    "pages/cymcapDB/cymcapDB",
     "pages/SRP/SRP",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib"

@@ -1,0 +1,43 @@
+/* pages/databaseGuide/databaseGuide.wxss */
+
+@import "../../style/guide.wxss";
+
+
+.btn{
+  width: 150rpx;
+  height: 70rpx;
+  font-size: 24rpx;
+  padding: 0;
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  border-radius: 4px;
+  margin: 15rpx 10rpx;
+  text-align: center;
+}
+.btn-selected{
+  border: 1px solid #06a380;
+}
+
+button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+image {
+  width: 80%;
+  margin-top: 10px;
+  
+}
+
+.uploader-text {
+  width: 250px;
+  line-height: 52px;
+  font-size: 34rpx;
+  color: #ffffff;
+  background-color: #06a380;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  text-align: center;
+}

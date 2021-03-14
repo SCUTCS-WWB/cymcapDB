@@ -25,7 +25,7 @@
 
   <!-- cymcap电缆载流量计算 -->
   <view class="uploader">
-    <navigator url="../cymcapDB/cymcapDB" open-type="navigate" class="uploader-text">
+    <navigator url="../cymcap/cymcap" open-type="navigate" class="uploader-text">
       <text>cymcap电缆载流量计算</text>
     </navigator>
   </view>

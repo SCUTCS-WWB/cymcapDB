@@ -15,7 +15,7 @@ Page({
     burywayVal: '直埋',   // post：敷设方式
     thermalresistivityVal: 0.8, // post：土壤热阻系数
     landWayVal: '单点接地', // post: 金属护套层接地方式
-    DepthVal: '1回0.7m',   // post：回路数和深度
+    DepthVal: '',
     depthVal: 0.7,  // num：敷设深度
     tempVal: 28,  // post：环境温度
     vol: [{vol:110, checked: 'true'}, {vol:220}], // 电压等级
@@ -25,21 +25,11 @@ Page({
     section: [{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}],
     thermalResistivity: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数
     thermalResistivityTemp: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数Temp
-    buryWay: [{way: '直埋', checked: 'true'}, {way: '电缆沟' }, {way: '埋管'}, {way: '非开挖铺管'}, {way: '空气桥架'}, {way: '隧道'}],  // 敷设方式
-    buryDepth: {'直埋': [{val: '1回0.7m', checked:'true'}, {val: '2回0.7m'}], 
-                '电缆沟': [{val: '2回0.7m', checked:'true'},{val: '3回0.7m'},{val: '4回0.7m'},{val: '6回0.7m'}],
-                '埋管': [{val: '1回0.7m', checked:'true'}, {val: '2回0.7m'},
-                        {val: '3回1.2m'}, {val: '4回1.2m'},{val: '6回1.2m'}],
-                '非开挖铺管': [{val: '1回3m', checked:'true'},{val: '2回3m'},
-                        {val: '3回3m'},{val: '4回3m'}],
-                '空气桥架': [{val: '4回', checked:'true'}],
-                '隧道': [{val: '8回5m', checked:'true'}]}, // 填埋深度
-    burydepth: [{val: '1回0.7m', checked:'true'}, {val: '2回0.7m'}], // 填埋深度
-    envTemp: {0: [{val: 35, checked:'true'}, {val:25}],
-             0.7: [{val: 28, checked:'true'}, {val:30}, {val:32}], 
-             1.2: [{val: 27, checked:'true'}, {val:29}, {val:31}], 
-             3: [{val: 24, checked:'true'}, {val:26}, {val:28}], 
-             5:[{val: 30, checked:'true'}, {val:40}]}, // 环境温度（0代表空气中[春夏秋35℃，冬25℃]，其他为埋地[水泥、正常、草地地面]）
+    envTemp: {'直埋': [{val: 35, checked:'true'}, {val:25}],
+             '电缆沟': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '埋管': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '非开挖铺管': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
+             '空气桥架':[{val: 30, checked:'true'}, {val:40}]}, // 环境温度（0代表空气中[春夏秋35℃，冬25℃]，其他为埋地[水泥、正常、草地地面]）
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
     conditionSelectedList: [{
       value: '电压等级',
@@ -49,14 +39,6 @@ Page({
       value: '电缆截面',
       selected: false ,
       title: '电缆截面'
-    },{
-      value: '敷设方式',
-      selected: false ,
-      title: '敷设方式'
-    },{
-      value: '回路数和深度',
-      selected: false ,
-      title: '回路数和深度'
     },{
       value: '环境温度',
       selected: false ,
@@ -69,15 +51,51 @@ Page({
       value: '金属护套层接地方式',
       selected: false ,
       title: '金属护套层接地方式'
+    },{
+      value: '负荷因子',
+      selected: false ,
+      title: '负荷因子'
     }]
   },
 
   onLoad: function (options) {
     if (app.globalData.openid) {
       this.setData({
-        openid: app.globalData.openid
+        openid: app.globalData.openid,
       })
     }
+
+    this.setData({
+      DepthVal: options.DepthVal,
+      burywayVal: options.burywayVal
+    })
+
+    // 电缆沟2回    ===>    环境温度
+    if (this.data.burywayVal == "电缆沟" && this.data.DepthVal == "2回") {
+      this.setData({
+        envtemp: [{val: 30, checked:'true'}, {val: 40}],
+        tempVal: parseFloat(30)   
+      })
+    } else {
+      this.setData({
+        envtemp: this.data.envTemp[this.data.burywayVal],
+        tempVal: parseFloat(this.data.envTemp[this.data.burywayVal][0].val)
+      })
+    }
+
+    // 空气桥架和隧道/电缆沟2回    ===>    土壤热阻系数
+    if (this.data.burywayVal == "空气桥架" || this.data.burywayVal == "隧道" || (this.data.burywayVal == "电缆沟" && this.data.DepthVal == "2回")) {
+      this.setData({
+          thermalresistivityVal: "无",
+          thermalResistivity: [{val: "无", checked: 'true'}]
+      })
+    } else {
+      this.setData({
+          thermalresistivityVal: this.data.thermalResistivity[0].val,
+          thermalResistivity: this.data.thermalResistivityTemp
+      })
+    }
+    
   },
 
   checkboxChange: function(e) {
@@ -110,68 +128,8 @@ Page({
   // ----------------------------    温度关联与优先度： 敷设方式 > 填埋深度 > 环境温度    --------------------------------------
   // 改变敷设方式   
 
-  // 格式转换，1回 => depth: 0, 1回0.7m => depth: 0.7
-  getDepth: function(strDepth) {
-    if(strDepth.split('回')[1] == "") {
-      return 0
-    } else {
-      return parseFloat(strDepth.split('回')[1]);
-    }
-  },
+  buryWayChange: function () {
 
-  buryWayChange: function (e) {
-    this.setData({
-      burywayVal: e.detail.value,
-      burydepth: this.data.buryDepth[e.detail.value],
-      DepthVal: this.data.buryDepth[e.detail.value][0].val,
-      depthVal: this.getDepth(this.data.buryDepth[e.detail.value][0].val),
-    })
-
-    // 电缆沟2回0.7m    ===>    环境温度
-    if (e.detail.value == "电缆沟" && this.data.DepthVal == "2回0.7m") {
-      this.setData({
-        envtemp: [{val: 30, checked:'true'}, {val: 40}],
-        tempVal: parseFloat(30)
-      })
-    } else {
-      this.setData({
-        envtemp: this.data.envTemp[this.getDepth(this.data.buryDepth[e.detail.value][0].val)],
-        tempVal: parseFloat(this.data.envTemp[this.getDepth(this.data.buryDepth[e.detail.value][0].val)][0].val)
-      })
-    }
-
-    // 空气桥架和隧道/电缆沟2回0.7m    ===>    土壤热阻系数
-    if (e.detail.value == "空气桥架" || e.detail.value == "隧道" || (e.detail.value == "电缆沟" && this.data.DepthVal == "2回0.7m")) {
-      this.setData({
-          thermalresistivityVal: "无",
-          thermalResistivity: [{val: "无", checked: 'true'}]
-      })
-    } else {
-      this.setData({
-          thermalresistivityVal: this.data.thermalResistivity[0].val,
-          thermalResistivity: this.data.thermalResistivityTemp
-      })
-    }
-  },
-
-  buryDepthChange: function(e) {
-    this.setData({
-      DepthVal: e.detail.value,
-      depthVal: this.getDepth(e.detail.value),
-    })
-
-    // 电缆沟2回0.7m    ===>    环境温度
-    if (this.data.burywayVal == "电缆沟" && this.data.DepthVal == "2回0.7m") {
-      this.setData({
-        envtemp: [{val: 30, checked:'true'}, {val: 40}],
-        tempVal: parseFloat(30)
-      })
-    } else {
-      this.setData({
-        envtemp: this.data.envTemp[this.getDepth(e.detail.value)],
-        tempVal: parseFloat(this.data.envTemp[this.getDepth(e.detail.value)][0].val),
-      })
-    }
   },
 
   tempChange: function(e) {
@@ -184,6 +142,8 @@ Page({
 
   // 改变热阻系数
   thermalResistivityChange: function(e) {
+    console.log(this.data.DepthVal)
+    console.log(this.data.burywayVal)
     this.setData({
       thermalresistivityVal: parseFloat(e.detail.value)
     })

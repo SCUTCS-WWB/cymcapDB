@@ -29,6 +29,13 @@ Page({
     })
   },
 
+  clean: function(e) {
+    this.setData({
+      pwd: "",
+      name: ""
+    })
+  },
+
   onQuery: function() {
     console.log(this.data.name, this.data.pwd)
     const db = wx.cloud.database()

@@ -10,4 +10,26 @@ page {
 .wx-input {
   border: 1px solid #777777;
   margin: 5px;
+  border-radius: 2px;
+}
+
+#user_tag {
+  margin-top: 60px;
+}
+
+p {
+  font-size: 20px;
+  width: 100%;
+  text-indent: 22%;
+  font-weight: bold;
+}
+
+input {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
+}
+
+button {
+  margin-top: 20px;
 }

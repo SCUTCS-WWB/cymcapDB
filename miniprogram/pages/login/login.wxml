@@ -1,7 +1,9 @@
 <!--login.wxml-->
 <view class="container">
-  <text>Login</text>
-  <input class="wx-input" value="{{name}}" bindinput="inputUser" type="text" placeholder="用户名"/>
-  <input class="wx-input" value="{{pwd}}" bindinput="inputPwd" password type="text" placeholder="密码" />
-  <button size="mini" type="default" bindtap="onQuery">登录</button>
+  <p id="user_tag">用户名</p>
+  <input class="wx-input" value="{{name}}" bindinput="inputUser" type="text"/>
+  <p>密码</p>
+  <input class="wx-input" value="{{pwd}}" bindinput="inputPwd" password type="text"/>
+  <button size="default" type="primary" bindtap="onQuery">登录</button>
+  <button size="default" type="warn" bindtap="clean">重置</button>
 </view>
