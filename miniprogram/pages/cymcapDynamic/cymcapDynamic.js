@@ -25,12 +25,33 @@ Page({
     section: [{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}],
     thermalResistivity: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数
     thermalResistivityTemp: [{val:0.8, checked: 'true'}, {val:1 }, {val:1.5 }, {val:2 }, {val:3 }], // 土壤热阻系数Temp
-    envTemp: {'直埋': [{val: 35, checked:'true'}, {val:25}],
-             '电缆沟': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
-             '埋管': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
-             '非开挖铺管': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
-             '空气桥架':[{val: 30, checked:'true'}, {val:40}]}, // 环境温度（0代表空气中[春夏秋35℃，冬25℃]，其他为埋地[水泥、正常、草地地面]）
+    envTemp: {'直埋1回': [{val: 28, checked:'true'}, {val: 30},{val: 32}],
+             '直埋2回': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '电缆沟2回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
+             '电缆沟2回无填充': [{val: 30, checked:'true'}, {val:40}],
+             '电缆沟3回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
+             '电缆沟3回无填充': [{val: 30, checked:'true'}, {val:40}],
+             '电缆沟4回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
+             '电缆沟4回无填充': [{val: 30, checked:'true'}, {val:40}, ],
+             '电缆沟6回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
+             '电缆沟6回无填充': [{val: 30, checked:'true'}, {val:40}, ],
+             '电缆沟8回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
+             '电缆沟8回无填充': [{val: 30, checked:'true'}, {val:40}, ],
+             '非开挖铺管1回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
+             '非开挖铺管2回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
+             '非开挖铺管3回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
+             '非开挖铺管4回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
+             '空气桥架4回':[{val: 30, checked:'true'}, {val:40}],
+             '隧道8回':[{val: 23, checked:'true'}, {val:25}, {val:27}],
+             '埋管1回': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '埋管2回': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '埋管3回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '埋管4回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '埋管6回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+            },
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
+    load: [{val: 0.8, checked: 'true'}, {val: 0.9}],
+    loadVal: 0.8,
     conditionSelectedList: [{
       value: '电压等级',
       selected: false ,
@@ -51,7 +72,9 @@ Page({
       value: '金属护套层接地方式',
       selected: false ,
       title: '金属护套层接地方式'
-    }]
+    }],
+    imageSrc: "",
+    description: ""
   },
 
   onLoad: function (options) {
@@ -66,32 +89,28 @@ Page({
       burywayVal: options.burywayVal
     })
 
-    // 电缆沟2回    ===>    环境温度
-    if (this.data.burywayVal == "电缆沟" && this.data.DepthVal == "2回") {
-      this.setData({
-        envtemp: [{val: 30, checked:'true'}, {val: 40}],
-        tempVal: parseFloat(30)   
-      })
-    } else {
-      this.setData({
-        envtemp: this.data.envTemp[this.data.burywayVal],
-        tempVal: parseFloat(this.data.envTemp[this.data.burywayVal][0].val)
-      })
-    }
+    let bury_position = this.data.burywayVal + this.data.DepthVal
 
-    // 空气桥架和隧道/电缆沟2回    ===>    土壤热阻系数
-    if (this.data.burywayVal == "空气桥架" || this.data.burywayVal == "隧道" || (this.data.burywayVal == "电缆沟" && this.data.DepthVal == "2回")) {
+    // 设置环境温度
+    this.setData({
+      envtemp: this.data.envTemp[bury_position],
+      tempVal: parseFloat(this.data.envTemp[bury_position][0].val)
+    })
+
+    // 空气桥架4回    ===>    土壤热阻系数
+    if (bury_position == "空气桥架4回") {
       this.setData({
           thermalresistivityVal: "无",
           thermalResistivity: [{val: "无", checked: 'true'}]
       })
     } else {
       this.setData({
-          thermalresistivityVal: this.data.thermalResistivity[0].val,
+          thermalresistivityVal: this.data.thermalResistivityTemp[0].val,
           thermalResistivity: this.data.thermalResistivityTemp
       })
     }
-    
+
+    this.showImage();
   },
 
   checkboxChange: function(e) {
@@ -102,6 +121,35 @@ Page({
         })
         let detailValue = this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value)
         console.log('所有选中的值为：', detailValue)
+  },
+
+  showImage: function() {
+    let that = this;
+    this.setData({
+      hidden: false,
+      disabledShow: true
+    });
+    wx.cloud.callFunction({
+      name: "showImage",
+      data: {
+        depth: this.data.DepthVal,
+        way: this.data.burywayVal
+      },
+      success: res => {
+        that.setData({
+          imageSrc: res.result.url,
+          description: res.result.text
+        })
+      },
+      fail: err=> {
+        console.log(err)
+      },
+      complete: () => {
+        that.setData({
+          hidden: true,
+        });
+      }
+    })
   },
 
   // ------------------------------------------       电压关联与优先度： 电压等级 > 电缆截面       ---------------------------------
@@ -122,11 +170,6 @@ Page({
   },
 
   // ----------------------------    温度关联与优先度： 敷设方式 > 填埋深度 > 环境温度    --------------------------------------
-  // 改变敷设方式   
-
-  buryWayChange: function () {
-
-  },
 
   tempChange: function(e) {
     this.setData({
@@ -152,10 +195,18 @@ Page({
     })
   },
 
+  // 负荷因子
+  loadChange: function(e) {
+    this.setData({
+      loadVal: e.detail.value
+    })
+  },
+
   // -----------------------------------   稳态载流量    ------------------------------------------
   onQuerySteady: function() {
     console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
     console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
+    
     // 显示加载
     this.setData({
       hidden: false,
@@ -172,7 +223,9 @@ Page({
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value)
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度","负荷因子"]),
+        imageSrc: this.data.imageSrc,
+        description: this.data.description
       },
       success: res => {
         let that = this;
@@ -210,13 +263,13 @@ Page({
   },
 
   // -----------------------------------   动态载流量    ------------------------------------------
-  onQueryDynamic: function() {
+  onQuery: function() {
     this.setData({
       hidden: false,
       disabledDynamic: true
     });
     wx.cloud.callFunction({
-      name: "dynamic",
+      name: "query",
       data: {
         a: 1,
       },

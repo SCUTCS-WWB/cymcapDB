@@ -8,14 +8,21 @@ const _ = db.command
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+
   try {
-    db.collection('imageText').where({
+    url = ""
+    text = ""
+    const DataInfo = await db.collection('imageText').where({
       depth: event.depth,
       way: event.way
     }).get().then(res => {
-      console.log(res.data[0].src)
-      return res.data[0].src
+      if(res.data.length > 0) {
+        url = res.data[0].src
+        text = res.data[0].text
+      }
     })
+    return {url: url, text: text}
   } catch (error) {
     console.log(error)
   }

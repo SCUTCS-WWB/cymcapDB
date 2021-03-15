@@ -73,7 +73,7 @@ exports.main = async (event, context) => {
     }
     
     var buffer = await xlsx.build([{   
-      name: "steady",
+      name: "query",
       data: alldata
     }]); 
     //将表格存入到存储库中并返回文件ID

@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/cymcap/cymcap",
-    "pages/cymcapSteady/cymcapSteady",
-    "pages/index/index",
     "pages/login/login",
+    "pages/cymcapSteady/cymcapSteady",
+    "pages/cymcapDynamic/cymcapDynamic",
+    "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",

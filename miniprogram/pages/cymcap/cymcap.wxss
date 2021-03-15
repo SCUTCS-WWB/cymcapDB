@@ -27,7 +27,6 @@ button {
 image {
   width: 80%;
   margin-top: 10px;
-  
 }
 
 .uploader-text {
@@ -40,4 +39,10 @@ image {
   margin-bottom: 10px;
   border-radius: 2px;
   text-align: center;
+}
+
+#description {
+  margin-top: 10px;
+  width: 80%;
+  word-wrap: break-word;
 }

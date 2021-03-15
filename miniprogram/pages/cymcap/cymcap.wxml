@@ -35,12 +35,12 @@
  
   <button size="default" type="primary" bindtap="showImage">确定</button>
   <image src="{{imageSrc}}" lazy-load="true" mode="aspectFit"></image>
-  <p>xxx</p>
+  <p id="description">{{description}}</p>
 
   <view>
     <navigator url="../cymcapSteady/cymcapSteady?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">稳态载流量</navigator>
     <navigator url="../cymcapSteady/cymcapSteady" open-type="navigate" class="uploader-text">考虑工况稳态载流量</navigator>
-    <navigator url="../cymcapSteady/cymcapSteady" open-type="navigate" class="uploader-text">动态载流量</navigator>
+    <navigator url="../cymcapDynamic/cymcapDynamic" open-type="navigate" class="uploader-text">动态载流量</navigator>
     <navigator url="../cymcapSteady/cymcapSteady" open-type="navigate" class="uploader-text">短时载流量</navigator>
   </view>
 </view>

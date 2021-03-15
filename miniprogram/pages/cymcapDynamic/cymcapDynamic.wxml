@@ -87,9 +87,22 @@
         <view class="weui-cell">{{item.val}}</view>
         </label>
       </radio-group>
+  </view>
+
+  <!-- 负荷因子 -->
+  <view class="weui-cells weui-cells_after-title">
+      <text class="p" style="font-weight:bold">负荷因子</text>
+      <radio-group bindchange="loadChange">
+        <label class="weui-cell" wx:for="{{load}}">
+        <view class="weui-cell">
+          <radio value="{{item.val}}" checked="{{item.checked}}"/>
+        </view>
+        <view class="weui-cell">{{item.val}}</view>
+        </label>
+      </radio-group>
     </view>
 
-  <button size="mini" type="default" bindtap="onQuerySteady">确定</button>
+  <button size="default" type="primary" bindtap="onQuery">确定</button>
   <!-- <button size="mini" type="default" bindtap="onQueryDynamic">动态载流量</button>
   <button size="mini" type="default" bindtap="onQueryMoment">短时载流量</button> -->
 </view>
