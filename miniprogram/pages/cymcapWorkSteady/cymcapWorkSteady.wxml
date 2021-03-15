@@ -1,0 +1,95 @@
+<!--pages/cymcapDB/cymcapDB.wxml-->
+<view class="container">
+  <!-- 加载显示 -->
+  <loading hidden="{{hidden}}">
+        加载中...
+  </loading>
+
+  <view class="comment-btn">
+        <button
+            wx:for="{{conditionSelectedList}}" 
+            wx:for-item="item" 
+            wx:key="item.index"  
+            bindtap="checkboxChange" 
+            data-value="{{item.value}}" 
+            data-index="{{index}}"  
+            checked="{{item.selected}}"
+            class="btn {{item.selected ? 'btn-selected' : ''}}" >
+            {{item.title}}
+        </button>
+  </view>
+
+  <view>
+    <!-- 1. 改变电压等级 -->
+    <!-- 电压等级 -->
+    <view class="weui-cells weui-cells_after-title">
+      <text class="p" style="font-weight:bold">电压等级</text>
+      <radio-group bindchange="volChange">
+        <label class="weui-cell" wx:for="{{vol}}">
+        <view class="weui-cell">
+          <radio value="{{item.vol}}" checked="{{item.checked}}"/>
+        </view>
+        <view class="weui-cell">{{item.vol}}</view>
+        </label>
+      </radio-group>
+    </view>
+
+    <!-- 电缆截面 -->
+    <view class="weui-cells weui-cells_after-title">
+      <text class="p" style="font-weight:bold">电缆截面</text>
+      <radio-group bindchange="sectionChange">
+        <label class="weui-cell" wx:for="{{section}}" >
+          <view class="weui-cell">
+            <radio value="{{item.val}}" checked="{{item.checked}}"/>
+          </view>
+          <view class="weui-cell">{{item.val}}</view>
+        </label>
+      </radio-group>
+    </view>
+  </view>
+
+  <!-- 2. 改变敷设方式 -->
+  <!-- 环境温度 -->
+  <view class="weui-cells weui-cells_after-title">
+    <text class="p" style="font-weight:bold">环境温度</text>
+    <radio-group bindchange="tempChange">
+      <label class="weui-cell" wx:for="{{envtemp}}">
+        <view class="weui-cell">
+          <radio value="{{item.val}}" checked="{{item.checked}}" />
+        </view>
+        <view class="weui-cell">{{item.val}}</view>
+      </label>
+    </radio-group>
+  </view>
+
+  <!-- 3. 其他 -->
+  <!-- 热阻系数 -->
+  <view class="weui-cells weui-cells_after-title">
+    <text class="p" style="font-weight:bold">土壤热阻系数</text>
+    <radio-group bindchange="thermalResistivityChange">
+      <label class="weui-cell" wx:for="{{thermalResistivity}}">
+        <view class="weui-cell">
+          <radio value="{{item.val}}" checked="{{item.checked}}"/>
+        </view>
+        <view class="weui-cell">{{item.val}}</view>
+      </label>
+    </radio-group>
+  </view>
+
+  <!-- 金属护套层接地方式 -->
+  <view class="weui-cells weui-cells_after-title">
+      <text class="p" style="font-weight:bold">金属护套层接地方式</text>
+      <radio-group bindchange="landWayChange">
+        <label class="weui-cell" wx:for="{{landWay}}">
+        <view class="weui-cell">
+          <radio value="{{item.val}}" checked="{{item.checked}}"/>
+        </view>
+        <view class="weui-cell">{{item.val}}</view>
+        </label>
+      </radio-group>
+    </view>
+
+  <button size="default" type="primary" bindtap="onQuery">确定</button>
+  <!-- <button size="mini" type="default" bindtap="onQueryDynamic">动态载流量</button>
+  <button size="mini" type="default" bindtap="onQueryMoment">短时载流量</button> -->
+</view>

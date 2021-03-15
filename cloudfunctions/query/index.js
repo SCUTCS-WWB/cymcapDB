@@ -37,6 +37,9 @@ exports.main = async (event, context) => {
     if(event.selectedVal.indexOf("土壤热阻系数") != -1) {
       query.土壤热阻系数 = _.eq(event.土壤热阻系数)
     }
+    if(event.selectedVal.indexOf("负荷因子") != -1) {
+      query.负荷因子 = _.eq(event.负荷因子)
+    }
     
     const MAX_LIMIT = 100;
     const countResult = await db.collection('cymcap').count()

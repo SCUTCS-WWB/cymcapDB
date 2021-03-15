@@ -3,6 +3,7 @@
     "pages/cymcap/cymcap",
     "pages/login/login",
     "pages/cymcapSteady/cymcapSteady",
+    "pages/cymcapWorkSteady/cymcapWorkSteady",
     "pages/cymcapDynamic/cymcapDynamic",
     "pages/index/index",
     "pages/userConsole/userConsole",

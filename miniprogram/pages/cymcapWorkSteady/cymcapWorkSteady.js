@@ -50,8 +50,6 @@ Page({
              '埋管6回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
             },
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
-    load: [{val: 0.8, checked: 'true'}, {val: 0.9}],
-    loadVal: 0.8,
     conditionSelectedList: [{
       value: '电压等级',
       selected: false ,
@@ -195,15 +193,8 @@ Page({
     })
   },
 
-  // 负荷因子
-  loadChange: function(e) {
-    this.setData({
-      loadVal: e.detail.value
-    })
-  },
-
   // -----------------------------------   稳态载流量    ------------------------------------------
-  onQuerySteady: function() {
+  onQuery: function() {
     console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
     console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
     
@@ -223,8 +214,7 @@ Page({
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
-        负荷因子: this.data.loadVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度","负荷因子"]),
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },
@@ -258,98 +248,6 @@ Page({
         that.setData({
           hidden: true,
           disabledSteady: false
-        });
-      }
-    })
-  },
-
-  // -----------------------------------   动态载流量    ------------------------------------------
-  onQuery: function() {
-    this.setData({
-      hidden: false,
-      disabledDynamic: true
-    });
-    wx.cloud.callFunction({
-      name: "query",
-      data: {
-        a: 1,
-      },
-      success: res => {
-        let that = this;
-        wx.cloud.getTempFileURL({   //获取文件下载地址（24小时内有效）
-          fileList:[res.result.fileID],
-          success: res=> {
-            that.setData({
-              tempFileURL: res.fileList[0].tempFileURL,
-              showUrl: true
-            })
-            wx.setClipboardData({ //复制刚获取到链接，成功后会自动弹窗提示已复制
-              data: that.data.tempFileURL,
-              success: res=> {
-                wx.getClipboardData({
-                  success: (res) => {
-                    console.log(res.data)
-                  },
-                })
-              }
-            })
-          }
-        })
-      },
-      fail: err => {
-        console.log(err)
-      },
-      complete: () => {
-        let that = this;
-        that.setData({
-          hidden: true,
-          disabledDynamic: false
-        });
-      }
-    })
-  },
-
-  // -----------------------------------   短时载流量    ------------------------------------------
-  onQueryMoment: function() {
-    this.setData({
-      hidden: false,
-      disabledMoment: true
-    });
-    wx.cloud.callFunction({
-      name: "moment",
-      data: {
-        a: 1,
-      },
-      success: res => {
-        let that = this;
-        wx.cloud.getTempFileURL({   //获取文件下载地址（24小时内有效）
-          fileList:[res.result.fileID],
-          success: res=> {
-            that.setData({
-              tempFileURL: res.fileList[0].tempFileURL,
-              showUrl: true
-            })
-            wx.setClipboardData({ //复制刚获取到链接，成功后会自动弹窗提示已复制
-              data: that.data.tempFileURL,
-              success: res=> {
-                wx.getClipboardData({
-                  success: (res) => {
-                    console.log(res.data)
-                  },
-                })
-              }
-            })
-          }
-        })
-      },
-      fail: err=> {
-        console.log(err)
-      },
-      complete: () => {
-        let that = this;
-        that.setData({
-          hidden: true,
-          disabledMoment: false
         });
       }
     })
