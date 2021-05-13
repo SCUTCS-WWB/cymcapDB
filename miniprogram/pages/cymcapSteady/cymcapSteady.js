@@ -207,14 +207,15 @@ Page({
     wx.cloud.callFunction({
       name: "query",
       data: {
+        类型: "稳态",
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,
-        回路数和深度: this.data.DepthVal,
+        回路数: this.data.DepthVal,
         金属护套层接地方式: this.data.landWayVal,
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度"]),
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },

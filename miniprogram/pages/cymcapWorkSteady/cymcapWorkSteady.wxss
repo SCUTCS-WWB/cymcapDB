@@ -1,5 +1,8 @@
 /* pages/databaseGuide/databaseGuide.wxss */
 
+/* "隧道8回": [{"target":["①--0%","②--100%"],"related":["③--50%", "④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%", "④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}], */
+
+
 @import "../../style/guide.wxss";
 
 .btn{
@@ -23,5 +26,13 @@ button {
 }
 
 view {
-  width: 70%;
+  width: 100%;
+  text-align: center;
+}
+
+p {
+  display: block;
+  width: 100%;
+  word-wrap: break-word;
+  text-align: left;
 }

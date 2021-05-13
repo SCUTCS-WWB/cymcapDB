@@ -72,7 +72,34 @@ Page({
       title: '金属护套层接地方式'
     }],
     imageSrc: "",
-    description: ""
+    description: "",
+    workStatus: {
+      "直埋1回": [],
+      "直埋2回": [{"target":["①--100%"], "related":["②--0%"], checked: "true"}, {"target":["①--100%"],"related":["②--50"]}],
+      "非开挖铺管1回": [],
+      "非开挖铺管2回": [{"target":["①--100%"], "related":["②--0%"], checked: "true"}, {"target":["①--100%"],"related":["②--50"]}],
+      "非开挖铺管3回": [{"target":["①--0%","②--100%"], "related":["③--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%"]}],
+      "非开挖铺管4回": [{"target":["①--0%","②--100%"],"related":["③--50%","④--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%","④--50%"]}],
+      "埋管1回": [],
+      "埋管2回": [{"target":["①--100%"], "related":["②--0%"], checked: "true"}, {"target":["①--100%"],"related":["②--50"]}],
+      "埋管3回": [{"target":["①--0%","②--100%"], "related":["③--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%"]}],
+      "埋管4回": [{"target":["①--0%","②--100%"],"related":["③--50%","④--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%","④--50%"]},{"target":["③--0%","④--100%"],"related":["①--50%","②--50%"]},{"target":["③--100%","④--100%"],"related":["①--50%","②--50%"]}],
+      "埋管6回": [{"target":["①--0%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}],
+      "电缆沟2回填沙": [{"target":["①--100%"], "related":["②--0%"], checked: "true"}, {"target":["①--100%"],"related":["②--50"]}],
+      "电缆沟3回填沙": [{"target":["①--0%","②--100%"], "related":["③--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%"]}],
+      "电缆沟4回填沙": [{"target":["①--0%","②--100%"],"related":["③--50%","④--50%"]},{"target":["①--100%","②--100%"],"related":["③--50%","④--50%"], checked: "true"},{"target":["③--0%","④--100%"],"related":["①--50%","②--50%"]},{"target":["③--100%","④--100%"],"related":["①--50%","②--50%"]}],
+      "电缆沟6回填沙": [{"target":["①--0%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%"], checked: "true"},{"target":["①--100%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%"]}],
+      "电缆沟8回填沙": [{"target":["①--0%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}],
+      "电缆沟2回无填充": [{"target":["①--100%"], "related":["②--0%"], checked: "true"}, {"target":["①--100%"],"related":["②--50"]}],
+      "电缆沟3回无填充": [{"target":["①--0%","②--100%"], "related":["③--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%"]}],
+      "电缆沟4回无填充": [{"target":["①--0%","②--100%"],"related":["③--50%","④--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%","④--50%"]},{"target":["③--0%","④--100%"],"related":["①--50%","②--50%"]},{"target":["③--100%","④--100%"],"related":["①--50%","②--50%"]}],
+      "电缆沟6回无填充": [{"target":["①--0%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}],
+      "电缆沟8回无填充": [{"target":["①--0%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"], "related":["③--50%","④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}],
+      "空气桥架4回": [{"target":["①--0%","②--100%"],"related":["③--50%","④--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%","④--50%"]}],
+      "隧道8回": [{"target":["①--0%","②--100%"],"related":["③--50%", "④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"], checked: "true"},{"target":["①--100%","②--100%"],"related":["③--50%", "④--50%","⑤--50%","⑥--50%","⑦--50%","⑧--50%"]}],
+    },
+    workStatusTemp: [],
+    workStatusVal: ""
   },
 
   onLoad: function (options) {
@@ -94,6 +121,14 @@ Page({
       envtemp: this.data.envTemp[bury_position],
       tempVal: parseFloat(this.data.envTemp[bury_position][0].val)
     })
+
+    // 设置工况
+    if(this.data.workStatus[bury_position].length>0) {
+      this.setData({
+        workStatusTemp: this.data.workStatus[bury_position],
+        workStatusVal: this.data.workStatus[bury_position][0].target+"+"+this.data.workStatus[bury_position][0].related,
+      })
+    }
 
     // 空气桥架4回    ===>    土壤热阻系数
     if (bury_position == "空气桥架4回") {
@@ -193,7 +228,14 @@ Page({
     })
   },
 
-  // -----------------------------------   稳态载流量    ------------------------------------------
+  // 改变工况
+  workStatusChange: function(e) {
+    this.setData({
+      workStatusVal: e.detail.value
+    })
+  },
+
+  // -----------------------------------   考虑工况稳态载流量    ------------------------------------------
   onQuery: function() {
     console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
     console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
@@ -201,20 +243,23 @@ Page({
     // 显示加载
     this.setData({
       hidden: false,
-      disabledSteady: true
+      // disabledSteady: true
     });
+
     // 查询
     wx.cloud.callFunction({
       name: "query",
       data: {
+        类型: "考虑工况的稳态",
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,
-        回路数和深度: this.data.DepthVal,
+        回路数: this.data.DepthVal,
         金属护套层接地方式: this.data.landWayVal,
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度"]),
+        工况: this.data.workStatusVal,
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数","工况"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },
@@ -247,7 +292,7 @@ Page({
         let that = this;
         that.setData({
           hidden: true,
-          disabledSteady: false
+          // disabledSteady: false
         });
       }
     })

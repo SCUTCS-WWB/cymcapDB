@@ -198,33 +198,35 @@ Page({
   // 负荷因子
   loadChange: function(e) {
     this.setData({
-      loadVal: e.detail.value
+      loadVal: parseFloat(e.detail.value)
     })
   },
 
-  // -----------------------------------   稳态载流量    ------------------------------------------
-  onQuerySteady: function() {
+  // -----------------------------------   动态载流量    ------------------------------------------
+  onQuery: function() {
     console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
     console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
     
     // 显示加载
     this.setData({
       hidden: false,
-      disabledSteady: true
+      // disabledSteady: true
     });
+
     // 查询
     wx.cloud.callFunction({
       name: "query",
       data: {
+        类型: "动态",
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,
-        回路数和深度: this.data.DepthVal,
+        回路数: this.data.DepthVal,
         金属护套层接地方式: this.data.landWayVal,
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
         负荷因子: this.data.loadVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数和深度","负荷因子"]),
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数","负荷因子"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },
@@ -257,104 +259,13 @@ Page({
         let that = this;
         that.setData({
           hidden: true,
-          disabledSteady: false
+          // disabledSteady: false
         });
       }
     })
   },
 
-  // -----------------------------------   动态载流量    ------------------------------------------
-  onQuery: function() {
-    this.setData({
-      hidden: false,
-      disabledDynamic: true
-    });
-    wx.cloud.callFunction({
-      name: "query",
-      data: {
-        a: 1,
-      },
-      success: res => {
-        let that = this;
-        wx.cloud.getTempFileURL({   //获取文件下载地址（24小时内有效）
-          fileList:[res.result.fileID],
-          success: res=> {
-            that.setData({
-              tempFileURL: res.fileList[0].tempFileURL,
-              showUrl: true
-            })
-            wx.setClipboardData({ //复制刚获取到链接，成功后会自动弹窗提示已复制
-              data: that.data.tempFileURL,
-              success: res=> {
-                wx.getClipboardData({
-                  success: (res) => {
-                    console.log(res.data)
-                  },
-                })
-              }
-            })
-          }
-        })
-      },
-      fail: err => {
-        console.log(err)
-      },
-      complete: () => {
-        let that = this;
-        that.setData({
-          hidden: true,
-          disabledDynamic: false
-        });
-      }
-    })
-  },
-
-  // -----------------------------------   短时载流量    ------------------------------------------
-  onQueryMoment: function() {
-    this.setData({
-      hidden: false,
-      disabledMoment: true
-    });
-    wx.cloud.callFunction({
-      name: "moment",
-      data: {
-        a: 1,
-      },
-      success: res => {
-        let that = this;
-        wx.cloud.getTempFileURL({   //获取文件下载地址（24小时内有效）
-          fileList:[res.result.fileID],
-          success: res=> {
-            that.setData({
-              tempFileURL: res.fileList[0].tempFileURL,
-              showUrl: true
-            })
-            wx.setClipboardData({ //复制刚获取到链接，成功后会自动弹窗提示已复制
-              data: that.data.tempFileURL,
-              success: res=> {
-                wx.getClipboardData({
-                  success: (res) => {
-                    console.log(res.data)
-                  },
-                })
-              }
-            })
-          }
-        })
-      },
-      fail: err=> {
-        console.log(err)
-      },
-      complete: () => {
-        let that = this;
-        that.setData({
-          hidden: true,
-          disabledMoment: false
-        });
-      }
-    })
-  },
-
+ 
   goHome: function() {
     const pages = getCurrentPages()
     if (pages.length === 2) {
