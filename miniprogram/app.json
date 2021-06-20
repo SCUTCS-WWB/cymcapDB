@@ -5,6 +5,7 @@
     "pages/cymcapSteady/cymcapSteady",
     "pages/cymcapWorkSteady/cymcapWorkSteady",
     "pages/cymcapDynamic/cymcapDynamic",
+    "pages/cymcapShort/cymcapShort",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",

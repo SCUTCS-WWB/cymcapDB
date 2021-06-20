@@ -5,6 +5,19 @@
         加载中...
   </loading>
 
+  <!-- 选择载流量类型 -->
+  <view class="weui-cells weui-cells_after-title">
+    <text class="p" style="font-weight:bold">选择载流量类型</text>
+    <radio-group bindchange="loadTypeChange">
+      <label class="weui-cell" wx:for="{{loadType}}">
+      <view class="weui-cell">
+        <radio value="{{item.val}}" checked="{{item.checked}}"/>
+      </view>
+      <view class="weui-cell">{{item.name}}</view>
+      </label>
+    </radio-group>
+  </view>
+
   <!-- 2. 改变敷设方式 -->
   <!-- 敷设方式 -->
   <view class="weui-cells weui-cells_after-title">
@@ -32,15 +45,10 @@
     </radio-group>
   </view>
 
- 
   <button size="default" type="primary" bindtap="showImage">确定</button>
   <image src="{{imageSrc}}" lazy-load="true" mode="aspectFit"></image>
   <p id="description">{{description}}</p>
-
   <view>
-    <navigator url="../cymcapSteady/cymcapSteady?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">稳态载流量</navigator>
-    <navigator url="../cymcapWorkSteady/cymcapWorkSteady?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">考虑工况稳态载流量</navigator>
-    <navigator url="../cymcapDynamic/cymcapDynamic?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">动态载流量</navigator>
-    <navigator url="../cymcapSteady/cymcapSteady?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">短时载流量</navigator>
+    <navigator url="../{{loadtype}}/{{loadtype}}?DepthVal={{DepthVal}}&burywayVal={{burywayVal}}" open-type="navigate" class="uploader-text">载流量查询</navigator>
   </view>
 </view>

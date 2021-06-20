@@ -19,6 +19,10 @@ Page({
     depthVal: 0.7,  // num：敷设深度
     tempVal: 28,  // post：环境温度
     vol: [{vol:110, checked: 'true'}, {vol:220}], // 电压等级
+    InitialLoad: [{val: 25, checked: 'true'}, {val: 50}, {val: 75}],
+    initialload: 25,  // 初始负载
+    TimeLength: [{val: 25, checked: 'true'}, {val: 50}, {val: 75}],
+    timelength: 25, // 短时时长
     landWay: [{val:'单点接地', checked: 'true'}, {val:'交叉接地'}],  // 金属护套层接地方式
     Section: {110:[{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}], 
               220:[{val: 2500,checked: 'true'} ,{val: 2000}, {val: 1600}, {val: 1200}]},  // 电缆截面
@@ -55,12 +59,18 @@ Page({
              '埋管6回最优排列': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
             },
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
-    load: [{val: 0.8, checked: 'true'}, {val: 0.9}],
-    loadVal: 0.8,
     conditionSelectedList: [{
-      value: '电压等级',
+      value: '初始负载',
       selected: false ,
-      title: '电压等级'
+      title: '初始负载'
+    },{
+      value: '短时时长',
+      selected: false ,
+      title: '短时时长'
+    },{
+      value: '初始负载',
+      selected: false ,
+      title: '初始负载'
     },{
       value: '电缆截面',
       selected: false ,
@@ -174,6 +184,20 @@ Page({
     })
   },
 
+  // 改变初始负载
+  loadChange: function (e) {
+    this.setData({
+      initialload: parseInt(e.detail.value),
+    })
+  },
+
+  // 改变短时时长
+  timeChange: function (e) {
+    this.setData({
+      timelength: parseInt(e.detail.value),
+    })
+  },
+
   // ----------------------------    温度关联与优先度： 敷设方式 > 填埋深度 > 环境温度    --------------------------------------
 
   tempChange: function(e) {
@@ -200,14 +224,7 @@ Page({
     })
   },
 
-  // 负荷因子
-  loadChange: function(e) {
-    this.setData({
-      loadVal: parseFloat(e.detail.value)
-    })
-  },
-
-  // -----------------------------------   动态载流量    ------------------------------------------
+  // -----------------------------------   稳态载流量    ------------------------------------------
   onQuery: function() {
     console.log(this.data.volVal,this.data.burywayVal,this.data.DepthVal,this.data.landWayVal,this.data.tempVal,this.data.thermalresistivityVal,this.data.sectionVal,)
     console.log( this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value))
@@ -215,14 +232,15 @@ Page({
     // 显示加载
     this.setData({
       hidden: false,
-      // disabledSteady: true
+      disabledSteady: true
     });
-
     // 查询
     wx.cloud.callFunction({
       name: "query",
       data: {
-        类型: "动态",
+        类型: "短时",
+        初始负载: this.data.initialload,
+        时长: this.data.timelength,
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,
         回路数: this.data.DepthVal,
@@ -230,8 +248,7 @@ Page({
         环境温度: this.data.tempVal,
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
-        负荷因子: this.data.loadVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数","负荷因子"]),
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },
@@ -264,13 +281,12 @@ Page({
         let that = this;
         that.setData({
           hidden: true,
-          // disabledSteady: false
+          disabledSteady: false
         });
       }
     })
   },
 
- 
   goHome: function() {
     const pages = getCurrentPages()
     if (pages.length === 2) {

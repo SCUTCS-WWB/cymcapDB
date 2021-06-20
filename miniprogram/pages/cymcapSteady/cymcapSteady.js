@@ -48,6 +48,11 @@ Page({
              '埋管3回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
              '埋管4回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
              '埋管6回': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '埋管1回最优排列': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '埋管2回最优排列': [{val: 28, checked:'true'}, {val:30}, {val:32}], 
+             '埋管3回最优排列': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '埋管4回最优排列': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
+             '埋管6回最优排列': [{val: 27, checked:'true'}, {val:29}, {val:31}], 
             },
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
     conditionSelectedList: [{

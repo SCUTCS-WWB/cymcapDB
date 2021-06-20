@@ -53,6 +53,14 @@ exports.main = async (event, context) => {
       query.工况 = _.eq(event.工况)
       alldata.push(['工况', event.工况])
     }
+    if(event.selectedVal.indexOf("时长") != -1) {
+      query.时长 = _.eq(event.时长)
+      alldata.push(['时长', event.时长])
+    }
+    if(event.selectedVal.indexOf("初始负载") != -1) {
+      query.初始负载 = _.eq(event.初始负载)
+      alldata.push(['初始负载', event.初始负载])
+    }
     
     const MAX_LIMIT = 100;
     DATASET_NAME = "";
@@ -65,8 +73,9 @@ exports.main = async (event, context) => {
     if(event.类型 == "动态") {
       DATASET_NAME = "cymcapDynamic"
     }
-
-    console.log(event.负荷因子)
+    if(event.类型 == "短时") {
+      DATASET_NAME = "cymcapShort"
+    }
 
     const countResult = await db.collection(DATASET_NAME).count()
     const total = countResult.total
@@ -89,6 +98,11 @@ exports.main = async (event, context) => {
     if(event.类型 == "考虑工况的稳态") {
       row.push('工况');
       row.push('考虑工况的稳态载流量');
+    }
+    if(event.类型 == "短时") {
+      row.push('初始负荷');
+      row.push('短时时长');
+      row.push('短时载流量');
     }
     alldata.push(row); //将此行数据添加到一个向表格中存数据的数组中
     
@@ -114,8 +128,13 @@ exports.main = async (event, context) => {
           arr.push(DataInfo.data[key].动态载流量);
         }
         if(event.类型 == "考虑工况的稳态") {
-          arr.push(DataInfo.data[key].工况)
+          arr.push(DataInfo.data[key].工况);
           arr.push(DataInfo.data[key].考虑工况的稳态载流量);
+        }
+        if(event.类型 == "短时") {
+          arr.push(DataInfo.data[key].初始负荷);
+          arr.push(DataInfo.data[key].时长);
+          arr.push(DataInfo.data[key].短时载流量);
         }
         alldata.push(arr)
       }
