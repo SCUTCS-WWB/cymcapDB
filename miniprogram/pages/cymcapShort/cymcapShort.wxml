@@ -20,9 +20,9 @@
   </view>
 
   <view>
-    <!-- 初始负载 -->
+    <!-- 初始负荷 -->
     <view class="weui-cells weui-cells_after-title">
-      <text class="p" style="font-weight:bold">初始负载</text>
+      <text class="p" style="font-weight:bold">初始负荷</text>
       <radio-group bindchange="loadChange">
         <label class="weui-cell" wx:for="{{InitialLoad}}">
         <view class="weui-cell">
@@ -37,7 +37,7 @@
     <view class="weui-cells weui-cells_after-title">
       <text class="p" style="font-weight:bold">短时时长</text>
       <radio-group bindchange="timeChange">
-        <label class="weui-cell" wx:for="{{InitialLoad}}">
+        <label class="weui-cell" wx:for="{{TimeLength}}">
         <view class="weui-cell">
           <radio value="{{item.val}}" checked="{{item.checked}}"/>
         </view>

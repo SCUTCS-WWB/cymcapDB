@@ -20,9 +20,9 @@ Page({
     tempVal: 28,  // post：环境温度
     vol: [{vol:110, checked: 'true'}, {vol:220}], // 电压等级
     InitialLoad: [{val: 25, checked: 'true'}, {val: 50}, {val: 75}],
-    initialload: 25,  // 初始负载
-    TimeLength: [{val: 25, checked: 'true'}, {val: 50}, {val: 75}],
-    timelength: 25, // 短时时长
+    initialload: 25,  // 初始负荷
+    TimeLength: [{val: 0.5, checked: 'true'}, {val: 1}, {val: 2}, {val: 5}],
+    timelength: 0.5, // 短时时长
     landWay: [{val:'单点接地', checked: 'true'}, {val:'交叉接地'}],  // 金属护套层接地方式
     Section: {110:[{val: 1600 ,checked: 'true'}, {val: 1200}, {val: 800}, {val: 500}], 
               220:[{val: 2500,checked: 'true'} ,{val: 2000}, {val: 1600}, {val: 1200}]},  // 电缆截面
@@ -60,17 +60,17 @@ Page({
             },
     envtemp: [{val: 28, checked:'true'}, {val:30}, {val:32}],
     conditionSelectedList: [{
-      value: '初始负载',
+      value: '初始负荷',
       selected: false ,
-      title: '初始负载'
+      title: '初始负荷'
     },{
       value: '短时时长',
       selected: false ,
       title: '短时时长'
     },{
-      value: '初始负载',
+      value: '电压等级',
       selected: false ,
-      title: '初始负载'
+      title: '电压等级'
     },{
       value: '电缆截面',
       selected: false ,
@@ -184,7 +184,7 @@ Page({
     })
   },
 
-  // 改变初始负载
+  // 改变初始负荷
   loadChange: function (e) {
     this.setData({
       initialload: parseInt(e.detail.value),
@@ -239,7 +239,7 @@ Page({
       name: "query",
       data: {
         类型: "短时",
-        初始负载: this.data.initialload,
+        初始负荷: this.data.initialload,
         时长: this.data.timelength,
         电压等级: this.data.volVal,
         敷设方式: this.data.burywayVal,

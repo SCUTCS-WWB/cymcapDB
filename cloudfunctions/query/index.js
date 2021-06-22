@@ -57,9 +57,9 @@ exports.main = async (event, context) => {
       query.时长 = _.eq(event.时长)
       alldata.push(['时长', event.时长])
     }
-    if(event.selectedVal.indexOf("初始负载") != -1) {
-      query.初始负载 = _.eq(event.初始负载)
-      alldata.push(['初始负载', event.初始负载])
+    if(event.selectedVal.indexOf("初始负荷") != -1) {
+      query.初始负荷= _.eq(event.初始负荷)
+      alldata.push(['初始负荷', event.初始负荷])
     }
     
     const MAX_LIMIT = 100;

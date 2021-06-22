@@ -77,6 +77,10 @@ Page({
       value: '金属护套层接地方式',
       selected: false ,
       title: '金属护套层接地方式'
+    },{
+      value: '负荷因子',
+      selected: false ,
+      title: '负荷因子'
     }],
     imageSrc: "",
     description: ""
@@ -231,7 +235,7 @@ Page({
         土壤热阻系数: this.data.thermalresistivityVal,
         电缆截面: this.data.sectionVal,
         负荷因子: this.data.loadVal,
-        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数","负荷因子"]),
+        selectedVal:  this.data.conditionSelectedList.filter(it => it.selected).map(it => it.value).concat(["敷设方式","回路数"]),
         imageSrc: this.data.imageSrc,
         description: this.data.description
       },

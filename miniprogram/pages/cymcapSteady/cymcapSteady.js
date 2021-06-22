@@ -36,7 +36,6 @@ Page({
              '电缆沟6回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
              '电缆沟6回无填充': [{val: 30, checked:'true'}, {val:40}, ],
              '电缆沟8回填沙': [{val: 28, checked:'true'}, {val: 30}, {val:32}], 
-             '电缆沟8回无填充': [{val: 30, checked:'true'}, {val:40}, ],
              '非开挖铺管1回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
              '非开挖铺管2回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 
              '非开挖铺管3回': [{val: 24, checked:'true'}, {val:26}, {val:28}], 

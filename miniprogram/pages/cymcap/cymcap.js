@@ -21,7 +21,7 @@ Page({
     buryWay: [{way: '直埋', checked: 'true'}, {way: '电缆沟' }, {way: '埋管'}, {way: '非开挖铺管'}, {way: '空气桥架'}, {way: '隧道'}],  // 敷设方式
     buryDepthAll: {
       'cymcapSteady':{'直埋': [{val: '1回', checked:'true'}, {val: '2回'}], 
-            '电缆沟': [{val: '2回填沙', checked:'true'},{val: '3回填沙'},{val: '4回填沙'},{val: '6回填沙'},{val: '8回填沙'},{val: '2回无填充'},{val: '3回无填充'},{val: '4回无填充'},{val: '6回无填充'},{val: '8回无填充'}],
+            '电缆沟': [{val: '2回填沙', checked:'true'},{val: '3回填沙'},{val: '4回填沙'},{val: '6回填沙'},{val: '8回填沙'},{val: '2回无填充'},{val: '3回无填充'},{val: '4回无填充'},{val: '6回无填充'}],
             '埋管': [{val: '1回', checked:'true'}, {val: '2回'},
                     {val: '3回'}, {val: '4回'},{val: '6回'},
                     {val: '1回最优排列'},{val: '2回最优排列'},{val: '3回最优排列'},
@@ -51,7 +51,7 @@ Page({
             '非开挖铺管': [{val: '1回', checked:'true'},{val: '2回'},{val: '3回'},{val: '4回'}]}
     },
     buryDepth: {'直埋': [{val: '1回', checked:'true'}, {val: '2回'}], 
-                '电缆沟': [{val: '2回填沙', checked:'true'},{val: '3回填沙'},{val: '4回填沙'},{val: '6回填沙'},{val: '8回填沙'},{val: '2回无填充'},{val: '3回无填充'},{val: '4回无填充'},{val: '6回无填充'},{val: '8回无填充'}],
+                '电缆沟': [{val: '2回填沙', checked:'true'},{val: '3回填沙'},{val: '4回填沙'},{val: '6回填沙'},{val: '8回填沙'},{val: '2回无填充'},{val: '3回无填充'},{val: '4回无填充'},{val: '6回无填充'}],
                 '埋管': [{val: '1回', checked:'true'}, {val: '2回'},
                         {val: '3回'}, {val: '4回'},{val: '6回'},
                         {val: '1回最优排列'},{val: '2回最优排列'},{val: '3回最优排列'},
